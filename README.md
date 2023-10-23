@@ -18,7 +18,7 @@ The lab requires the installation and use of the following tools
 + `vagrant up` - Turn on all the VMs and run Vagrantfile (please enter into vagrant-cluster/ folder before run this command)
 + `vagrant status` - Check the status of the VM's
 + `vagrant ssh worker01.kube` - Open ssh on target VM
-+ `vagrant destroy worker01.kube` - or without VM name for all instances
++ `vagrant destroy worker01.kube` - Destroy specific instance or destroy all instances, without VM name
 
 ## Lab versions tested
 The Vagrantfile has been tested for now only with :
