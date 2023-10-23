@@ -1,6 +1,6 @@
 #!/bin/bash
 # Common setup for all servers 
-sudo apt update -y && sudo apt upgrade -y
+sudo apt-get update -y && sudo apt-get upgrade -y
 sudo ufw disable
 
 # disable swap
