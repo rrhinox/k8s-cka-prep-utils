@@ -2,7 +2,14 @@
 Notes of Kubernetes CKA Certification Exam Preparation
 
 ## 🥅 Main Goal!
-The goal of this repository is to pin utilities and notes to prepare me for The Linux Foundation CKA exam, by providing an environment of some virtual machines on a local computer to have a lab available without some public cloud provider.  
+The goal of this repository is to pin utilities and notes to prepare me for The Linux Foundation CKA exam, by providing an environment of some virtual machines on a local computer to have a lab available without some public cloud provider. 
+
+<img src="https://kubernetes.io/images/kubeadm-stacked-color.png" align="right" width="150px"> 
+
+The idea is to use the kubeadm tools offered by the official documentation :
++ <https://kubernetes.io/docs/tasks/tools/>
++ <https://kubernetes.io/docs/reference/setup-tools/kubeadm/>
++ <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>
 
 ## 🧪 Lab Prerequisites
 The lab requires the installation and use of the following tools
