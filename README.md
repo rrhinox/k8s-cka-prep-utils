@@ -12,6 +12,10 @@ The idea is to use the kubeadm tools offered by the official documentation :
 + <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>
 + <https://kubernetes.io/docs/home/>
 
+## Kubernetes Updates
+
+> ⚠️ **For kubeadm,kubelet and kubectl installation Note:** The legacy package repositories (apt.kubernetes.io and yum.kubernetes.io) have been deprecated and frozen starting from September 13, 2023. ***Using the new package repositories hosted at pkgs.k8s.io is strongly recommended*** and required in order to install Kubernetes versions released after September 13, 2023. The deprecated legacy repositories, and their contents, might be removed at any time in the future and without a further notice period. The new package repositories provide downloads for Kubernetes versions starting with v1.24.0.
+
 ## 🧪 Lab Prerequisites
 The lab requires the installation and use of the following tools
 + VirtualBox
@@ -46,3 +50,8 @@ This guides help me a lot to understand all the aspects of the CKA Exam and also
 + [DevOpsCube - Automated Vagrant Cluster](https://devopscube.com/kubernetes-cluster-vagrant/)
 + [Troubleshooting kubeadm all topics](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
 + [Vagrant topic for troubleshooting kubeadm](https://jhooq.com/kubernetes-error-execution-phase-preflight-preflight/)
+
+
+## :hammer_and_wrench: 🐜 Precaution In-progress project
+
+⚠️ The lab, files, and scripts are continually being updated and for study purposes so you may run into errors or problems when starting vm's or installing the cluster.

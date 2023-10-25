@@ -2,7 +2,7 @@
 # Common setup for all servers 
 sudo apt-get update -y && sudo apt-get upgrade -y
 
-# Add other dependencies 
+# Add other dependencies and sw
 sudo apt-get install apt-transport-https gnupg2 uidmap -y
 
 # Load modules
@@ -31,48 +31,57 @@ EOF
 sudo sysctl --system
 
 # ----- Install keys and repo for containerd ----- #
-# sudo mkdir -p /etc/apt/keyrings
+sudo mkdir -m 755 /etc/apt/keyrings
 # ----- #
-# curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-# | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+| sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 # ----- #
-# echo \
-# "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-# https://download.docker.com/linux/ubuntu \
-# $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # ----- Containerd ----- #
-# sudo apt-get update && sudo apt-get install containerd -y
-# sudo containerd config default | sudo tee /etc/containerd/config.toml
-# sudo sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/config.toml
-# sudo systemctl restart containerd
+sudo apt-get update && sudo apt-get install containerd -y
+sudo mkdir /etc/containerd
+sudo containerd config default >> /etc/containerd/config.toml
+# ---- Tell Containerd use systemd as cgroup driver (reccomended if you use cgroup v2) ----- #
+# doc: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd
+# check cgroup : https://kubernetes.io/docs/concepts/architecture/cgroups/#check-cgroup-version
+sudo sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/config.toml
+sudo systemctl restart containerd
 
 # ----- Install Kubernetes SW ----- #
-# echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+# doc: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+
+# ----- Add repo for k8s ----- #
+# OLD REPO URL :
+# sudo echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
+# NEW REPO URL : 
+#sudo echo "deb http://pkgs.k8s.io/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
+
+# ----- Download public key for secure repo ----- #
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
 # sudo apt-get update
-# sudo apt-get install -y kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
+# export k8version="1.27.1-00"
+# sudo apt-get install -y kubeadm=$k8version kubelet=$k8version kubectl=$k8version
 
 # ----- Hold the software at the recent but stable version we install ----- #
 # sudo apt-mark hold kubeadm kubelet kubectl
 
-# ----- Using Calico as a Network plugin will allow to use Network Policy later ----- #
-# wget https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
-# grep -A4 -B3 CALICO_IPV4POOL_CIDR calico.yaml
-    # The default IPv4 pool to create on startup if none exists. Pod IPs will be
-    # chosen from this range. Changing this value after installation will have
-    # no effect. This should fall within `--cluster-cidr`.
-    # - name: CALICO_IPV4POOL_CIDR
-    #   value: "192.168.0.0/16"
-    # Disable file logging so `kubectl logs` works.
+# kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs | tee kubeadm-init.out
 
-# ----- kubeadm-config.yaml ----- #
-# apiVersion: kubeadm.k8s.io/v1beta3
-# kind: ClusterConfiguration
-# kubernetesVersion: 1.25.1 #<-- Use the word stable for newest version
-# controlPlaneEndpoint: "k8scp:6443" #<-- Use the alias we put in /etc/hosts not the IP
-# networking:
-#   podSubnet: 192.168.0.0/16 #<-- Match the IP range from the Calico config file
+# ----- Copy config file for kubectl > .kube/config ----- #
+#   mkdir -p $HOME/.kube
+#   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#   sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-# sudo kubeadm init --config kubeadm-config.yaml --upload-certs | tee /tmp/kubeadm-init.out
+# ----- Enable bash completion ----- #
+# sudo apt-get install bash-completion -y
+# <exit and log back in>
+# student@cp:˜$ source <(kubectl completion bash)
+# student@cp:˜$ echo "source <(kubectl completion bash)" >> $HOME/.bashrc
 
+# ----- CNI Example for containerd configuration file in ../files folder ----- #
+# doc : https://kubernetes.io/docs/tasks/administer-cluster/migrating-from-dockershim/troubleshooting-cni-plugin-related-errors/#an-example-containerd-configuration-file
