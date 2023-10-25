@@ -35,7 +35,6 @@ sudo sysctl --system
 # ----- #
 # curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
 # | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-# sudo apt-get update && sudo apt-get install containerd.io -y
 # ----- #
 # echo \
 # "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
@@ -43,7 +42,7 @@ sudo sysctl --system
 # $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # ----- Containerd ----- #
-# sudo apt-get update && sudo apt-get install containerd.io -y
+# sudo apt-get update && sudo apt-get install containerd -y
 # sudo containerd config default | sudo tee /etc/containerd/config.toml
 # sudo sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/config.toml
 # sudo systemctl restart containerd
