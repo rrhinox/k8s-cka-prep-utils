@@ -44,6 +44,5 @@ This guides help me a lot to understand all the aspects of the CKA Exam and also
 
 + [DevOpsCube - Exam Guide](https://devopscube.com/cka-exam-study-guide/)
 + [DevOpsCube - Automated Vagrant Cluster](https://devopscube.com/kubernetes-cluster-vagrant/)
-+ [Vagrant Troubleshoot](https://jhooq.com/kubernetes-error-execution-phase-preflight-preflight/)
 + [Troubleshooting kubeadm all topics](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
 + [Vagrant topic for troubleshooting kubeadm](https://jhooq.com/kubernetes-error-execution-phase-preflight-preflight/)
