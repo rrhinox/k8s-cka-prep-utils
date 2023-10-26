@@ -46,14 +46,18 @@ The Vagrantfile has been tested for now only with :
 
 ## 🦮 Guides that I highly recommend to follow!
 
-This guides help me a lot to understand all the aspects of the CKA Exam and also inspire me to create a Vagrantfile to follow step by step all the labs manually of course offered by The Linux Foundation [LFS258](https://training.linuxfoundation.org/training/kubernetes-fundamentals/)
+This guides help me a lot to understand all the aspects of the CKA Exam and also inspire me, to create a Vagrantfile to follow step by step all the labs manually, of course offered by The Linux Foundation [LFS258](https://training.linuxfoundation.org/training/kubernetes-fundamentals/) . 
 
 + [DevOpsCube - Exam Guide](https://devopscube.com/cka-exam-study-guide/)
 + [DevOpsCube - Automated Vagrant Cluster](https://devopscube.com/kubernetes-cluster-vagrant/)
 + [Troubleshooting kubeadm all topics](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
 + [Vagrant topic for troubleshooting kubeadm](https://jhooq.com/kubernetes-error-execution-phase-preflight-preflight/)
++ [TechiescampVagrant](https://github.com/techiescamp/vagrant-kubeadm-kubernetes/tree/main)
 
+Just to help someone, I bought the course (LFS258) + CKA Exam bundle, at one of the times of the year when they have deals con il 50% di sconto; such as BlackFriday or black week which usually (in italy) the period is from November 22 to Cyber Monday on Monday, December 2!
+
+In any case DevOps Cube (and other website) often offers temporary discount codes!
 
 ## :hammer_and_wrench: 🐜 Precaution In-progress project
 
-⚠️ The lab, files, and scripts are continually being updated and for study purposes so you may run into errors or problems when starting vm's or installing the cluster.
+⚠️ The lab, files, and scripts are continually being updated and for personal study purpose, so you may run into errors or problems when starting vm's or installing the cluster.
