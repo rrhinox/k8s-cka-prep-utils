@@ -41,8 +41,8 @@ The Vagrantfile has been tested for now only with :
 + Vagrant 2.4.0
 
 > 🐛 (i) Known problem with gitbash fo Vagrant : 
-> + if you use git-bash.exe the Ctrl + C exit from ssh session opened  via `vagrant ssh` command. You can simply use powershell to jump in the ubuntu host.
-> + Vagrant create 2 network interface (eth0 and eth1) this needs to be taken into account at cluster init via kubeadm configuration file, see vagrant-cluster/scripts/common.sh:line:76 (podSubnet).
+> + if you use git-bash.exe the Ctrl + C exit from ssh session opened  via `vagrant ssh` command, see this [issue](https://github.com/hashicorp/vagrant/issues/12908). You can simply use powershell to jump in the ubuntu host as workaround.
+> + Vagrant create 2 network interface (eth0 and eth1) this needs to be taken into account at cluster init via kubeadm configuration file, see vagrant-cluster/scripts/common.sh and search to kubeadm init command (with podSubnet).
 
 ## 🦮 Guides that I highly recommend to follow!
 
