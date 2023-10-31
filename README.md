@@ -1,4 +1,4 @@
-# ☸️📋K8s CKA Preparation Utils
+# ☸️ K8s CKA Preparation Utils 📋
 Notes of Kubernetes CKA Certification Exam Preparation
 
 ## 🥅 Main Goal!
