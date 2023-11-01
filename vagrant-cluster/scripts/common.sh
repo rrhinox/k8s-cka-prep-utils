@@ -16,9 +16,9 @@ sudo ufw disable
 sudo swapoff -a
 
 # add into /etc/hosts
-sudo echo "192.168.0.10 cplane.kube" >> /etc/hosts
-sudo echo "192.168.0.11 worker01.kube" >> /etc/hosts
-sudo echo "192.168.0.12 worker02.kube" >> /etc/hosts
+sudo echo "192.168.0.10 cplane" >> /etc/hosts
+sudo echo "192.168.0.11 worker01" >> /etc/hosts
+sudo echo "192.168.0.12 worker02" >> /etc/hosts
 
 # Update kernel networking to allow necessary traffic.
 sudo cat << EOF | sudo tee /etc/sysctl.d/kubernetes.conf
