@@ -52,25 +52,35 @@ sudo sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/
 sudo systemctl restart containerd
 
 # ----- Install Kubernetes SW ----- #
-# doc: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+# doc: 
+#   - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+#   - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
 
 # ----- Add repo for k8s ----- #
 # OLD REPO URL :
-# sudo echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
-# NEW REPO URL : 
-#sudo echo "deb http://pkgs.k8s.io/ kubernetes-xenial main" >> /etc/apt/sources.list.d/kubernetes.list
-
-# ----- Download public key for secure repo ----- #
+# sudo echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+# ----- Download gpg key ----- #
+# OLD REPO GPG KEY
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 
-# sudo apt-get update
-# export k8version="1.27.1-00"
-# sudo apt-get install -y kubeadm=$k8version kubelet=$k8version kubectl=$k8version
+# NEW REPO URL : 
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+# ----- Download gpg key ----- #
+# NEW REPO GPG KEY
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+sudo apt-get update -y
+
+sudo apt-get install -y kubeadm kubelet kubectl
 
 # ----- Hold the software at the recent but stable version we install ----- #
-# sudo apt-mark hold kubeadm kubelet kubectl
+sudo apt-mark hold kubeadm kubelet kubectl
 
 # kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs | tee kubeadm-init.out
+
+# Copy containerd file example into containerd folder
+cp /home/vagrant/10-containerd-net.conflist /etc/cni/net.d/
 
 # ----- Copy config file for kubectl > .kube/config ----- #
 #   mkdir -p $HOME/.kube
@@ -80,8 +90,8 @@ sudo systemctl restart containerd
 # ----- Enable bash completion ----- #
 # sudo apt-get install bash-completion -y
 # <exit and log back in>
-# student@cp:˜$ source <(kubectl completion bash)
-# student@cp:˜$ echo "source <(kubectl completion bash)" >> $HOME/.bashrc
+# source <(kubectl completion bash)
+# echo "source <(kubectl completion bash)" >> $HOME/.bashrc
 
 # ----- CNI Example for containerd configuration file in ../files folder ----- #
 # doc : https://kubernetes.io/docs/tasks/administer-cluster/migrating-from-dockershim/troubleshooting-cni-plugin-related-errors/#an-example-containerd-configuration-file
