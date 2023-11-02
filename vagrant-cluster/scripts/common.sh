@@ -41,15 +41,23 @@ echo \
 https://download.docker.com/linux/ubuntu \
 $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# ----- Containerd ----- #
+# ----- Containerd START ----- #
 sudo apt-get update && sudo apt-get install containerd -y
 sudo mkdir /etc/containerd
 sudo containerd config default >> /etc/containerd/config.toml
+
 # ---- Tell Containerd use systemd as cgroup driver (reccomended if you use cgroup v2) ----- #
 # doc: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd
 # check cgroup : https://kubernetes.io/docs/concepts/architecture/cgroups/#check-cgroup-version
 sudo sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/config.toml
+
+# Copy containerd file example into containerd folder
+cp /home/vagrant/10-containerd-net.conflist /etc/cni/net.d/
+
+# restart containerd service
 sudo systemctl restart containerd
+
+# ----- Containerd END ----- #
 
 # ----- Install Kubernetes SW ----- #
 # doc: 
@@ -79,8 +87,7 @@ sudo apt-mark hold kubeadm kubelet kubectl
 
 # kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs | tee kubeadm-init.out
 
-# Copy containerd file example into containerd folder
-cp /home/vagrant/10-containerd-net.conflist /etc/cni/net.d/
+
 
 # ----- Copy config file for kubectl > .kube/config ----- #
 #   mkdir -p $HOME/.kube
