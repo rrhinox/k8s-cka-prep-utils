@@ -85,7 +85,7 @@ sudo apt-get install -y kubeadm kubelet kubectl
 # ----- Hold the software at the recent but stable version we install ----- #
 sudo apt-mark hold kubeadm kubelet kubectl
 
-# kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs | tee kubeadm-init.out
+# kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs --kubernetes-version=stable-1.27 | tee kubeadm-init.out
 
 
 
