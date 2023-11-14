@@ -25,6 +25,7 @@ The lab requires the installation and use of the following tools
 + IDE or preferred editor (e.g. Visual Studio Code, vim..) and Git 
 
 ### 📜 Official Docs
++ [kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 + [Vagrant Prerequisites](https://developer.hashicorp.com/vagrant/tutorials/getting-started/getting-started-index#prerequisites)
 + [Vagrant Tutorial](https://developer.hashicorp.com/vagrant/tutorials/getting-started)
 
@@ -43,6 +44,7 @@ The Vagrantfile has been tested for now only with :
 > 🐛 (i) Known problem with gitbash fo Vagrant : 
 > + if you use git-bash.exe the Ctrl + C exit from ssh session opened  via `vagrant ssh` command, see this [issue](https://github.com/hashicorp/vagrant/issues/12908). You can simply use powershell to jump in the ubuntu host as workaround.
 > + Vagrant create 2 network interface (eth0 and eth1) this needs to be taken into account at cluster init via kubeadm configuration file, see vagrant-cluster/scripts/common.sh and search to kubeadm init command (with podSubnet).
+> + If you install VBox on Windows10 you can incurr in Error and you need this to install VBox correctly : [MS Visuial C++](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
 ## 🦮 Guides that I highly recommend to follow!
 
@@ -57,6 +59,10 @@ This guides help me a lot to understand all the aspects of the CKA Exam and also
 Just to help someone, I bought the course (LFS258) + CKA Exam bundle, at one of the times of the year when they have deals con il 50% di sconto; such as BlackFriday or black week which usually (in italy) the period is from November 22 to Cyber Monday on Monday, December 2!
 
 In any case DevOps Cube (and other website) often offers temporary discount codes!
+
+## Exercise and playground for the exam preparation
+
++ [CKA Simulator](https://killer.sh/cka)
 
 ## :hammer_and_wrench: 🐜 Precaution In-progress project
 
