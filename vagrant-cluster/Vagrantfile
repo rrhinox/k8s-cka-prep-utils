@@ -14,8 +14,8 @@ Vagrant.configure("2") do |config|
           vb.memory = 8192
           vb.cpus = 4
         end
-      cp.vm.provision "shell", path: "scripts/common.sh"
       cp.vm.provision "file", source: "files/10-containerd-net.conflist", destination: "/home/vagrant/10-containerd-net.conflist"
+      cp.vm.provision "shell", path: "scripts/common.sh"
     end
     
     # Worker Node 1
@@ -29,8 +29,8 @@ Vagrant.configure("2") do |config|
           vb.memory = 8192
           vb.cpus = 4
         end
-      wn.vm.provision "shell",
-        path: "scripts/common.sh"
+      wn.vm.provision "file", source: "files/10-containerd-net.conflist", destination: "/home/vagrant/10-containerd-net.conflist"
+      wn.vm.provision "shell", path: "scripts/common.sh"
     end
 
     # Worker Node 2
@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
           vb.memory = 8192
           vb.cpus = 4
         end
-      wn.vm.provision "shell",
-        path: "scripts/common.sh"
+      wn.vm.provision "file", source: "files/10-containerd-net.conflist", destination: "/home/vagrant/10-containerd-net.conflist"
+      wn.vm.provision "shell", path: "scripts/common.sh"
     end
 end
