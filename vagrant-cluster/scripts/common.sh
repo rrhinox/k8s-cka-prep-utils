@@ -52,7 +52,7 @@ sudo containerd config default >> /etc/containerd/config.toml
 sudo sed -e 's/SystemdCgroup = false/SystemdCgroup = true/g' -i /etc/containerd/config.toml
 
 # Copy containerd file example into containerd folder
-cp /home/vagrant/10-containerd-net.conflist /etc/cni/net.d/
+sudo cp /home/vagrant/10-containerd-net.conflist /etc/cni/net.d/
 
 # restart containerd service
 sudo systemctl restart containerd
