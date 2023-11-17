@@ -85,9 +85,18 @@ sudo apt-get install -y kubeadm kubelet kubectl
 # ----- Hold the software at the recent but stable version we install ----- #
 sudo apt-mark hold kubeadm kubelet kubectl
 
+# Run init for control-plane node
 # kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs --kubernetes-version=stable-1.27 | tee kubeadm-init.out
 
+# ----- If token expire use kubeadm to create it and check the expiration ----- # 
+## ----- sudo kubeadm token list
+## ----- sudo kubeadm token create
+# ----- Run openssl to get discovery-token-ca-cert-hash on controlplane and use in kubeadm join on worker node: ----- #
+## ----- openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'"
+## -----> example output: 807805fa347262143e39bc97a6d835907aeb5aec30f19d8d9d09c55fe4f27154
 
+# ----- Run join for worker node ----- #
+# kubeadm join --token 1gvlxo.a2o1yyyygwlbxxx8 192.168.0.10:6443 --discovery-token-ca-cert-hash sha256:807805fa347262143e39bc97a6d835907aeb5aec30f19d8d9d09c55fe4f27154
 
 # ----- Copy config file for kubectl > .kube/config ----- #
 #   mkdir -p $HOME/.kube
@@ -102,3 +111,7 @@ sudo apt-mark hold kubeadm kubelet kubectl
 
 # ----- CNI Example for containerd configuration file in ../files folder ----- #
 # doc : https://kubernetes.io/docs/tasks/administer-cluster/migrating-from-dockershim/troubleshooting-cni-plugin-related-errors/#an-example-containerd-configuration-file
+
+# ----- Add / Remove Role label to worker ----- #
+# kubectl label nodes worker01 node-role.kubernetes.io/worker=worker # (output: node/worker01 labeled)
+# kubectl label nodes worker01 node-role.kubernetes.io/worker- # (output: node/worker01 unlabeled )
