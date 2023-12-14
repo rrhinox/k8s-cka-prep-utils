@@ -16,7 +16,10 @@ The idea is to use the kubeadm tools offered by the official documentation :
 
 [ChangePackageRepo](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/change-package-repository/#before-you-begin)
 
-> ⚠️ **For kubeadm,kubelet and kubectl installation Note:** The legacy package repositories (apt.kubernetes.io and yum.kubernetes.io) have been deprecated and frozen starting from September 13, 2023. ***Using the new package repositories hosted at pkgs.k8s.io is strongly recommended*** and required in order to install Kubernetes versions released after September 13, 2023. The deprecated legacy repositories, and their contents, might be removed at any time in the future and without a further notice period. The new package repositories provide downloads for Kubernetes versions starting with v1.24.0.
+> ⚠️ **For kubeadm,kubelet and kubectl installation Note:** The legacy Linux package repositories (**apt.kubernetes.io and yum.kubernetes.io AKA packages.cloud.google.com**)
+have been frozen starting from September 13, 2023 and are going away in January 2024, users must migrate.
+Please read our announcement [for more details.](https://kubernetes.io/blog/2023/08/15/pkgs-k8s-io-introduction/)
+Using the new package repositories hosted at **pkgs.k8s.io** is strongly recommended
 
 ## 🧪 Lab Prerequisites
 The lab requires the installation and use of the following tools

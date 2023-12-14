@@ -115,3 +115,25 @@ sudo apt-mark hold kubeadm kubelet kubectl
 # ----- Add / Remove Role label to worker ----- #
 # kubectl label nodes worker01 node-role.kubernetes.io/worker=worker # (output: node/worker01 labeled)
 # kubectl label nodes worker01 node-role.kubernetes.io/worker- # (output: node/worker01 unlabeled )
+
+
+#################### NOTES AND TOOLS AFTER INSTALLATION ###############################
+# https://kubernetes.io/docs/tasks/debug/debug-cluster/crictl/
+# crictl is a command-line interface for CRI-compatible container runtimes. 
+# You can use it to inspect and debug container runtimes and applications on a Kubernetes node. 
+# crictl and its source are hosted in the cri-tools repository.
+
+# ----- Example of crictl config file ----- #
+# sudo cat /etc/crictl.yaml 
+# runtime-endpoint: unix:///var/run/containerd/containerd.sock
+# image-endpoint: unix:///var/run/containerd/containerd.sock
+# timeout: 10
+# debug: true
+
+# ----- Find out the correct endpoint ----- #
+# ps -ef | grep container-runtime-endpoint
+# example of output : --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock
+
+# ----- Some basic commands ----- #
+# Run endpoint on command line : 
+# sudo crictl -r unix:///var/run/containerd/containerd.sock ps -a
