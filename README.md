@@ -53,6 +53,7 @@ The Vagrantfile has been tested for now only with :
 
 This guides help me a lot to understand all the aspects of the CKA Exam and also inspire me, to create a Vagrantfile to follow step by step all the labs manually, of course offered by The Linux Foundation [LFS258](https://training.linuxfoundation.org/training/kubernetes-fundamentals/) . 
 
++ [KodeKloud - CKA Repo](https://github.com/kodekloudhub/certified-kubernetes-administrator-course.git)
 + [DevOpsCube - Exam Guide](https://devopscube.com/cka-exam-study-guide/)
 + [DevOpsCube - Automated Vagrant Cluster](https://devopscube.com/kubernetes-cluster-vagrant/)
 + [Troubleshooting kubeadm all topics](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
@@ -61,7 +62,7 @@ This guides help me a lot to understand all the aspects of the CKA Exam and also
 
 Just to help someone, I bought the course (LFS258) + CKA Exam bundle, at one of the times of the year when they have deals con il 50% di sconto; such as BlackFriday or black week which usually (in italy) the period is from November 22 to Cyber Monday on Monday, December 2!
 
-In any case DevOps Cube (and other website) often offers temporary discount codes!
+In any case DevOps Cube (and other website) often offers temporary discount codes also for KodeKloud.com (at the moment the best platform for preparing CKA Exam)!
 
 ## Exercise and playground for the exam preparation
 
