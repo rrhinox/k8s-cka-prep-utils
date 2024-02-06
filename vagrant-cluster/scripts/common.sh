@@ -20,6 +20,8 @@ sudo echo "192.168.0.10 cplane" >> /etc/hosts
 sudo echo "192.168.0.11 worker01" >> /etc/hosts
 sudo echo "192.168.0.12 worker02" >> /etc/hosts
 
+# https://kubernetes.io/docs/setup/production-environment/container-runtimes/#forwarding-ipv4-and-letting-iptables-see-bridged-traffic
+
 # Update kernel networking to allow necessary traffic.
 sudo cat << EOF | sudo tee /etc/sysctl.d/kubernetes.conf
 net.bridge.bridge-nf-call-ip6tables = 1
