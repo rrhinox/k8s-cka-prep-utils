@@ -1,0 +1,185 @@
+
+https://kubernetes.io/docs/setup/production-environment/container-runtimes/#forwarding-ipv4-and-letting-iptables-see-bridged-traffic
+
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+# sysctl params required by setup, params persist across reboots
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+
+# Apply sysctl params without reboot
+sudo sysctl --system
+
+Verify that the br_netfilter, overlay modules are loaded by running the following commands:
+
+lsmod | grep br_netfilter
+lsmod | grep overlay
+
+Verify that the net.bridge.bridge-nf-call-iptables, net.bridge.bridge-nf-call-ip6tables, and net.ipv4.ip_forward system variables are set to 1 
+in your sysctl config by running the following command:
+
+sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
+
+
+https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd
+|_ https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+	|_https://github.com/containerd/containerd/blob/main/docs/getting-started.md#option-2-from-apt-get-or-dnf
+		|_https://docs.docker.com/engine/install/ubuntu/
+		|
+		|___ Run the following command to uninstall all conflicting packages:
+		|___ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+		|
+		|____1. Install using the apt repository
+		Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+		
+		Set up Docker's apt repository.
+		
+		
+		# Add Docker's official GPG key:
+		sudo apt-get update
+		sudo apt-get install ca-certificates curl
+		sudo install -m 0755 -d /etc/apt/keyrings
+		sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+		sudo chmod a+r /etc/apt/keyrings/docker.asc
+		
+		# Add the repository to Apt sources:
+		echo \
+		"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+		$(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+		sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+		sudo apt-get update
+		
+		
+		Note:
+
+		If you use an Ubuntu derivative distro, such as Linux Mint, you may need to use UBUNTU_CODENAME instead of VERSION_CODENAME.
+		|
+		|_2. Install the Docker packages.
+		|___ Latest: 
+				sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+				
+				we only need without docker related packages : sudo apt-get install containerd.io
+				now check service containerd with :
+				systemctl status containerd
+				
+		|___ Specific Version : 
+			# List the available versions:
+				apt-cache madison docker-ce | awk '{ print $3 }'
+
+				5:24.0.0-1~ubuntu.22.04~jammy
+				5:23.0.6-1~ubuntu.22.04~jammy
+				...
+
+				VERSION_STRING=5:24.0.0-1~ubuntu.22.04~jammy
+				sudo apt-get install docker-ce=$VERSION_STRING docker-ce-cli=$VERSION_STRING containerd.io docker-buildx-plugin docker-compose-plugin
+				
+				
+----------- CGROUPS DRIVER -----------------
+https://kubernetes.io/docs/setup/production-environment/container-runtimes/#cgroup-drivers
+On Linux, control groups are used to constrain resources that are allocated to processes.
+
+Both the kubelet and the underlying container runtime need to interface with control groups to enforce resource management for pods and containers and set resources such as cpu/memory requests and limits. 
+To interface with control groups, the kubelet and the container runtime need to use a cgroup driver. It's critical that the kubelet and the container runtime use the same cgroup driver and are configured the same.
+
+The rule is if you are using a SystemD system, you have to use systemd cgroup driver. Check with this command your system: 
+ps -p 1 
+
+There are two cgroup drivers available:
+- cgroupfs (default for Container Runtime)
+- systemd
+
+https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd
+Configuring the systemd cgroup driver
+To use the systemd cgroup driver in /etc/containerd/config.toml with runc, set
+
+The systemd cgroup driver is recommended if you use cgroup v2.
+
+
+cat <<EOF | sudo tee /etc/containerd/config.toml
+# systemd cgroup driver
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+  [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+    SystemdCgroup = true
+EOF
+
+ls -lrth /etc/containerd/config.toml; cat /etc/containerd/config.toml
+
+sudo systemctl restart containerd
+
+
+----------- INSTALL KUBELET, KUBEADM AND KUBECTL -----------------
+
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
+
+sudo mkdir -m 755 /etc/apt/keyrings
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+
+# To see the new version labels
+sudo apt-cache madison kubeadm
+
+sudo apt-get install -y kubelet=1.27.0-2.1 kubeadm=1.27.0-2.1 kubectl=1.27.0-2.1
+
+sudo apt-mark hold kubelet kubeadm kubectl
+
+
+
+----------- Initialize / Creat kubernetes cluster -----------------
+
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#initializing-your-control-plane-node
+
+ip addr show | grep "192.168.56."
+
+Check the IP assigned to master from Vagrantfile and use it for apiserver-advertise-address options:
+
+sudo kubeadm init --apiserver-advertise-address 192.168.56.11 --pod-network-cidr=10.244.0.0/16
+
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+  
+  --- we use in this lab https://www.weave.works/docs/net/latest/kubernetes/kube-addon/
+  --- |_ https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy
+  --- Weave Net provides networking and network policy, will carry on working on both sides of a network partition, and does not require an external database.
+  --- Weave Net can be installed onto your CNI-enabled Kubernetes cluster with a single command:
+  --- kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+  --- after all resources are deployed edit deamonset with correct cidr pod network	
+  --- If you do set the --cluster-cidr option on kube-proxy, make sure it matches the IPALLOC_RANGE given to Weave Net (see below).
+  
+		vagrant@kubemaster:~$ kubectl get ds -A
+		NAMESPACE     NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+		kube-system   kube-proxy   1         1         0       1            0           kubernetes.io/os=linux   20m
+		kube-system   weave-net    1         1         1       1            0           <none>                   9m31s
+
+		vagrant@kubemaster:~$ kubectl -n kube-system edit ds weave-net
+
+Then you can join any number of worker nodes by running the following on each as root :
+
+kubeadm join 192.168.56.11:6443 --token pelwq8.05hnz27nwibsezie \
+        --discovery-token-ca-cert-hash sha256:9c46c35adacfb45877da40af74d79311779000bb599269b0051805eda81ff29c
