@@ -26,5 +26,19 @@ Which allows you to define the default namespace of the current context, like th
 
 `kn my-namespace`   # set default to my-namespace
 
+## VIM settings for yaml k8s files
 
+First create or open file `.vimrc` :
+`vim ~/.vimrc`
 
+Add this 3 lines and save the file : 
+
+`set expandtab`     # expandtab: use spaces for tab
+
+`set tabstop=2`     # tabstop: amount of spaces used for tab
+
+`set shiftwidth=2`  # shiftwidth: amount of spaces used during indentation
+
+or in one-line command : 
+
+`echo -e "set expandtab \nset tabstop=2 \nset shiftwidth=2" > .vimrc`
