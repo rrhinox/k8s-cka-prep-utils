@@ -66,7 +66,9 @@ In any case DevOps Cube (and other website) often offers temporary discount code
 
 ## Exercise and playground for the exam preparation
 
-+ [CKA Simulator](https://killer.sh/cka)
++ [CKA Simulator - killer.sh](https://killer.sh/cka)
++ [CKA Scenarios - killercoda.com](https://killercoda.com/killer-shell-cka)
++ [Learning Playground - by Docker](https://labs.play-with-k8s.com/)
 
 ## :hammer_and_wrench: 🐜 Precaution In-progress project
 
