@@ -47,3 +47,7 @@ or in one-line command :
 Let's look into the events for some errors :
 
 `kubectl get events --sort-by='.metadata.creationTimestamp' -A`
+
+`kubectl --context mycluster get event --field-selector involvedObject.name=pod-to-check`
+
+
