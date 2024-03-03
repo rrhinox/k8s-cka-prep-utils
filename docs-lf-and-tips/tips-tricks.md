@@ -42,3 +42,8 @@ Add this 3 lines and save the file :
 or in one-line command : 
 
 `echo -e "set expandtab \nset tabstop=2 \nset shiftwidth=2" > .vimrc`
+
+
+Let's look into the events for some errors :
+
+`kubectl get events --sort-by='.metadata.creationTimestamp' -A`
