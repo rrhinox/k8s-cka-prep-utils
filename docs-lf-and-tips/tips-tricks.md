@@ -44,10 +44,11 @@ or in one-line command :
 `echo -e "set expandtab \nset tabstop=2 \nset shiftwidth=2" > .vimrc`
 
 
-Let's look into the events for some errors :
+Let's look into the events with some example:
 
 `kubectl get events --sort-by='.metadata.creationTimestamp' -A`
 
 `kubectl --context mycluster get event --field-selector involvedObject.name=pod-to-check`
 
+`kubectl get events --field-selector involvedObject.kind=PersistentVolumeClaim`
 
