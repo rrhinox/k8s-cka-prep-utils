@@ -13,7 +13,7 @@ Usage: `k run pod1 --image=nginx $do`
 ## Fast pod deletion
 `export now="--force --grace-period 0"`
 
-Usage: `k delete pod1 $now`
+Usage: `k delete pod pod-to-del $now`
 
 ## Alias for Namespace
 In addition you could define an alias like:
@@ -52,3 +52,7 @@ Let's look into the events with some example:
 
 `kubectl get events --field-selector involvedObject.kind=PersistentVolumeClaim`
 
+
+[Tips for CKA-CKAD-CKS preparation](https://github.com/fireflycons/tips-for-CKA-CKAD-CKS)
+
+[ProTips kubectl for CKA-CKAD-CKS preparation](https://github.com/fireflycons/tips-for-CKA-CKAD-CKS?tab=readme-ov-file#pro-tips)
