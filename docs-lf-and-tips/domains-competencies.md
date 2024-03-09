@@ -1,9 +1,4 @@
-
-## Storage 10%
-+ Understand storage classes, persistent volumes
-+ Understand volume mode, access modes and reclaim policies for volumes
-+ Understand persistent volume claims primitive
-+ Know how to configure applications with persistent storage
+# CKA Domains ordered by percentage value
 
 ## Troubleshooting 30%
 + Evaluate cluster and node logging
@@ -12,14 +7,6 @@
 + Troubleshoot application failure
 + Troubleshoot cluster component failure
 + Troubleshoot networking
-
-## Workloads & Scheduling 15%
-+ Understand deployments and how to perform rolling update and rollbacks
-+ Use ConfigMaps and Secrets to configure applications
-+ Know how to scale applications
-+ Understand the primitives used to create robust, self-healing, application deployments
-+ Understand how resource limits can affect Pod scheduling
-+ Awareness of manifest management and common templating tools
 
 ## Cluster Architecture, Installation & Configuration 25%
 + Manage role based access control (RBAC)
@@ -36,3 +23,17 @@
 + Know how to use Ingress controllers and Ingress resources
 + Know how to configure and use CoreDNS
 + Choose an appropriate container network interface plugin
+
+## Workloads & Scheduling 15%
++ Understand deployments and how to perform rolling update and rollbacks
++ Use ConfigMaps and Secrets to configure applications
++ Know how to scale applications
++ Understand the primitives used to create robust, self-healing, application deployments
++ Understand how resource limits can affect Pod scheduling
++ Awareness of manifest management and common templating tools
+
+## Storage 10%
++ Understand storage classes, persistent volumes
++ Understand volume mode, access modes and reclaim policies for volumes
++ Understand persistent volume claims primitive
++ Know how to configure applications with persistent storage
