@@ -1,8 +1,27 @@
-# ☸️ K8s CKA Preparation Utils 📋
+# ☸️ K8s CKA Preparation  📋
 Notes of Kubernetes CKA Certification Exam Preparation
 
-## 🥅 Main Goal!
-The goal of this repository is to pin utilities and notes to prepare me for The Linux Foundation CKA exam, by providing an environment of some virtual machines on a local computer to have a lab available without some public cloud provider. 
+## CNCF Foundation Curriculum
+Study all topics as proposed in the curriculum till you feel comfortable with all.
+
+Read the Curriculum and check here the updated CKA .pdf file:
+<https://github.com/cncf/curriculum>
+
+Read the Handbook, the tips and the FAQ: 
++ <https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2>
++ <https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad>
++ <https://docs.linuxfoundation.org/tc-docs/certification/faq-cka-ckad>
+
+## Kubernetes documentation
+Get familiar with the Kubernetes documentation and be able to use the search. Allowed links are:
+
++ <https://kubernetes.io/docs>
++ <https://kubernetes.io/blog>
+
+NOTE: Verify the allowed list [here](https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-certified-kubernetes-application-developer-ckad)
+
+## 🥅 Main Goal of the Repo-Lab!
+The goal of this repository is to pin utilities, links, tips and notes to prepare me (and share with others) for The Linux Foundation CKA exam and providing an environment of some virtual machines on my local computer to have a lab available without some public cloud provider. 
 
 <img src="https://kubernetes.io/images/kubeadm-stacked-color.png" align="right" width="150px"> 
 
@@ -10,44 +29,15 @@ The idea is to use the kubeadm tools offered by the official documentation :
 + <https://kubernetes.io/docs/tasks/tools/>
 + <https://kubernetes.io/docs/reference/setup-tools/kubeadm/>
 + <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>
-+ <https://kubernetes.io/docs/home/>
+ 
+## Kubernetes Important Updates
 
-## Kubernetes Updates
-
-[ChangePackageRepo](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/change-package-repository/#before-you-begin)
+### [ChangePackageRepo](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/change-package-repository/#before-you-begin)
 
 > ⚠️ **For kubeadm,kubelet and kubectl installation Note:** The legacy Linux package repositories (**apt.kubernetes.io and yum.kubernetes.io AKA packages.cloud.google.com**)
 have been frozen starting from September 13, 2023 and are going away in January 2024, users must migrate.
 Please read our announcement [for more details.](https://kubernetes.io/blog/2023/08/15/pkgs-k8s-io-introduction/)
 Using the new package repositories hosted at **pkgs.k8s.io** is strongly recommended
-
-## 🧪 Lab Prerequisites
-The lab requires the installation and use of the following tools
-+ VirtualBox
-+ Vagrant
-+ IDE or preferred editor (e.g. Visual Studio Code, vim..) and Git 
-
-### 📜 Official Docs
-+ [kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-+ [Vagrant Prerequisites](https://developer.hashicorp.com/vagrant/tutorials/getting-started/getting-started-index#prerequisites)
-+ [Vagrant Tutorial](https://developer.hashicorp.com/vagrant/tutorials/getting-started)
-
-## 🪄 Vagrant basics to start Lab VMs
-+ `vagrant up` - Turn on all the VMs and run Vagrantfile (please enter into vagrant-cluster/ folder before run this command)
-+ `vagrant status` - Check the status of the VM's
-+ `vagrant ssh worker01.kube` - Open ssh on target VM
-+ `vagrant destroy worker01.kube` - Destroy specific instance or destroy all instances, without VM name
-
-## 🕵️ Lab versions tested
-The Vagrantfile has been tested for now only with :
-+ Windows 11 Pro - 22H2 22621.2283 with Windows Feature Experience Pack 1000.22662.1000.0
-+ Virtual box 7.0.10 r158379 (Qt5.15.2)
-+ Vagrant 2.4.0
-
-> 🐛 (i) Known problem with gitbash fo Vagrant : 
-> + if you use git-bash.exe the Ctrl + C exit from ssh session opened  via `vagrant ssh` command, see this [issue](https://github.com/hashicorp/vagrant/issues/12908). You can simply use powershell to jump in the ubuntu host as workaround.
-> + Vagrant create 2 network interface (eth0 and eth1) this needs to be taken into account at cluster init via kubeadm configuration file, see vagrant-cluster/scripts/common.sh and search to kubeadm init command (with podSubnet).
-> + If you install VBox on Windows10 you can incurr in Error and you need this to install VBox correctly : [MS Visuial C++](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
 ## 🦮 Guides that I highly recommend to follow!
 
