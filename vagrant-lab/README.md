@@ -27,3 +27,8 @@ The Vagrantfile has been tested for now only with :
 > + if you use git-bash.exe the Ctrl + C exit from ssh session opened  via `vagrant ssh` command, see this [issue](https://github.com/hashicorp/vagrant/issues/12908). You can simply use powershell to jump in the ubuntu host as workaround.
 > + Vagrant create 2 network interface (eth0 and eth1) this needs to be taken into account at cluster init via kubeadm configuration file, see vagrant-cluster/scripts/common.sh and search to kubeadm init command (with podSubnet).
 > + If you install VBox on Windows10 you can incurr in Error and you need this to install VBox correctly : [MS Visuial C++](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+
+
+## :hammer_and_wrench: 🐜 Precaution In-progress project
+
+⚠️ The lab, files, and scripts are continually being updated and for personal study purpose, so you may run into errors or problems when starting vm's or installing the cluster.
