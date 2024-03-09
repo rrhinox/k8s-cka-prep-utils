@@ -53,7 +53,7 @@ This guides help me a lot to understand all the aspects of the CKA Exam and also
 
 Just to help someone, I bought the course (LFS258) + CKA Exam bundle, at one of the times of the year when they have 50% discount; such as BlackFriday or black week which usually (in italy) the period is from November 22 to Cyber Monday on Monday, December 2!
 
-In any case DevOps Cube (and other website) often offers temporary discount codes also KodeKloud.com (at the moment the best platform for preparing CKA Exam)!
+In any case DevOps Cube (and other website) often offers temporary discount codes also [KodeKloud.com](https://kodekloud.com/) (at the moment the best platform for preparing CKA Exam)!
 
 ## Exercise and playground for the exam preparation
 
