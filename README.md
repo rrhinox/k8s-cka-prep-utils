@@ -7,6 +7,7 @@ Study all topics as proposed in the curriculum till you feel comfortable with al
 Read the Curriculum and check here the updated CKA .pdf file:
 <https://github.com/cncf/curriculum>
 
+## Linux Foundation Instructions
 Read the Handbook, the tips and the FAQ: 
 + <https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2>
 + <https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad>
