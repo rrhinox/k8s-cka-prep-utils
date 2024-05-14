@@ -1,5 +1,6 @@
-# ☸️ K8s CKA Preparation  📋
-Notes of Kubernetes CKA Certification Exam Preparation
+# ☸️ Kubernetes CKA Exam Preparation  📋
+
+Notes of Certified Kubernetes Administrator Exam Preparation
 
 ## CNCF Foundation Curriculum
 Study all topics as proposed in the curriculum till you feel comfortable with all.
