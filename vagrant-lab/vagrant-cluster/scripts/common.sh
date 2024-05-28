@@ -74,11 +74,11 @@ sudo systemctl restart containerd
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 
 # NEW REPO URL : 
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # ----- Download gpg key ----- #
 # NEW REPO GPG KEY
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 sudo apt-get update -y
 
@@ -88,7 +88,7 @@ sudo apt-get install -y kubeadm kubelet kubectl
 sudo apt-mark hold kubeadm kubelet kubectl
 
 # Run init for control-plane node
-# kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs --kubernetes-version=stable-1.27 | tee kubeadm-init.out
+# kubeadm init --apiserver-advertise-address="192.168.0.10" --service-cidr=172.68.0.10/12 --pod-network-cidr=10.255.0.0/16 --upload-certs --kubernetes-version=stable-1.29 | tee kubeadm-init.out
 
 # ----- If token expire use kubeadm to create it and check the expiration ----- # 
 ## ----- sudo kubeadm token list
@@ -96,6 +96,19 @@ sudo apt-mark hold kubeadm kubelet kubectl
 # ----- Run openssl to get discovery-token-ca-cert-hash on controlplane and use in kubeadm join on worker node: ----- #
 ## ----- openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'"
 ## -----> example output: 807805fa347262143e39bc97a6d835907aeb5aec30f19d8d9d09c55fe4f27154
+
+# You should now deploy a pod network to the cluster.
+# Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+#   https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+# ----- Weave Net Install EXAMPLE: ----- #
+## -----  kubectl apply -f https://reweave.azurewebsites.net/k8s/v1.29/net.yaml
+# > serviceaccount/weave-net created
+# > clusterrole.rbac.authorization.k8s.io/weave-net created
+# > clusterrolebinding.rbac.authorization.k8s.io/weave-net created
+# > role.rbac.authorization.k8s.io/weave-net created
+# > rolebinding.rbac.authorization.k8s.io/weave-net created
+# > daemonset.apps/weave-net created
 
 # ----- Run join for worker node ----- #
 # kubeadm join --token 1gvlxo.a2o1yyyygwlbxxx8 192.168.0.10:6443 --discovery-token-ca-cert-hash sha256:807805fa347262143e39bc97a6d835907aeb5aec30f19d8d9d09c55fe4f27154
@@ -139,3 +152,7 @@ sudo apt-mark hold kubeadm kubelet kubectl
 # ----- Some basic commands ----- #
 # Run endpoint on command line : 
 # sudo crictl -r unix:///var/run/containerd/containerd.sock ps -a
+
+# ----- Installing Helm3 ----- #
+# ----- docs: https://helm.sh/docs/intro/install/ ----- #
+# curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
